@@ -1,0 +1,138 @@
+
+<html>
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body class="bg" style="background-image: url(assets/images/patient.jpg)">
+<div class="row">
+  <div class="col-md-2"></div>
+<div class="col-md-6">
+<form #patientRegistrationForm =  "ngForm" (ngSubmit)="registerPatient(patientRegistrationForm.value)" >
+  <h2 style="text-align: center ; color: darkred">{{message}}</h2>
+<div class="container register-form">
+  <div class="form">
+    <div class="note">
+      <p>Patient Registration Form</p>
+    </div>
+    <div class="form-content">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="form-group">
+            <input type="text" name="name" id="name"  [(ngModel)]="patient.firstName" #firstname ="ngModel" required class="form-control"  placeholder="firstname *">
+            <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="firstname.errors.required">
+                Name is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" name="lastName"  required #lastname ="ngModel" class ="form-control" [(ngModel)]="patient.lastName" class="form-control" placeholder="Lastname *"/>
+          </div>
+          <div class="form-group">
+            <input type="text" name="username" required #username= "ngModel"   [(ngModel)]="patient.username" class="form-control" placeholder="Username *"/>
+            <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="username.errors.required">
+                username is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" [(ngModel)]="patient.email" #email ="ngModel" required class="form-control" placeholder="Email *" />
+            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="email.errors.required">
+                Email is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="date" name="dob" [(ngModel)]="patient.dob" class="form-control" placeholder="Date of Birth *" />
+          </div>
+          <div class="form-group">
+            <input type="text" name="city" required #city ="ngModel"  [(ngModel)]="patient.city" class="form-control" placeholder="City *"/>
+            <div *ngIf="city.invalid && (city.dirty || city.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="city.errors.required">
+                city is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" name="state"   [(ngModel)]="patient.state" class="form-control" placeholder="state *"/>
+          </div>
+          <div class="form-group">
+            <input type="text" name="country"   [(ngModel)]="patient.country" class="form-control" placeholder="country *"/>
+          </div>
+          <div class="form-group">
+            <input type="text" name="mobile" required #mobile ="ngModel" maxlength="10" [(ngModel)]="patient.contactNumber" class="form-control" placeholder="ContactNumber *"/>
+            <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="mobile.errors.required">
+                Mobile number is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" required #password = "ngModel" minlength="6" [(ngModel)]="patient.password" class="form-control" placeholder="Your Password *" />
+            <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="password.errors.required">
+                password is required.
+              </div>
+              <div *ngIf="password.errors.minlength">
+                password must be more than 6 digits
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!patientRegistrationForm.form.valid" >Submit</button>
+    </div>
+  </div>
+</div>
+</form>
+</div>
+<div class="col-md-4">
+  <form #patientLoginForm = "ngForm" (ngSubmit)="loginPatient(patientLoginForm.value)">
+    <div class="container register-form">
+      <div class="form">
+        <div class="note">
+          <p>Patient Login Form </p>
+        </div>
+
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <input type="text" name="User"   [(ngModel)]="patientLoginData.username" required #user = "ngModel" class="form-control" placeholder="username *"/>
+                <div *ngIf="user.invalid && (user.dirty || user.touched)"
+                     class="alert alert-danger">
+                  <div *ngIf="user.errors.required">
+                    username is required.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="password" name="password" [(ngModel)]="patientLoginData.password" required #pass = "ngModel" class="form-control" placeholder="Your Password *" />
+                <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"
+                     class="alert alert-danger">
+                  <div *ngIf="pass.errors.required">
+                    password is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btnSubmit btn btn-primary" [disabled]="!patientLoginForm.form.valid" name="Login" >Login</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+</body>
+</html>

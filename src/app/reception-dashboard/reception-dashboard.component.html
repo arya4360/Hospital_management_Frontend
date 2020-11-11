@@ -1,0 +1,450 @@
+<html>
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="wrapper ">
+  <div class="row">
+    <div class="col-md-2">
+  <div class="mat-drawer-side" >
+    <div class="sidebar nav">
+      <ul>
+        <li class="active ">
+          <a (click)="dashboard()">
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <li>
+          <a (click)="viewRegisterForm()">
+            <p>Register Doctor</p>
+          </a>
+        </li>
+        <li>
+          <a (click)="getNotVerifiedPatients()">
+            <p>Verify Patients</p>
+          </a>
+        </li>
+        <li>
+          <a (click)="viewAllAppointments()">
+            <p>View Appointments</p>
+          </a>
+        </li>
+        <li>
+          <a (click)="viewMakeAppointment()">
+            <p>Make Appointments</p>
+          </a>
+        </li>
+        <li>
+          <a (click)="viewComplaint()">
+            <p>View Complaints/Feedback</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+    </div>
+    <div class="col-md-10">
+      <div class="row col-md-12">
+        <h3 class="animated bounce infinite">Welcome to Reception</h3>
+      </div>
+  <div class="main-panel">
+    <div class="content">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-body bgcolour">
+              <div class="row">
+                <div class="col-2 col-md-12">
+                  <div class="numbers" >
+                    <p class="card-category"><b>New Patients(Not-Verified)</b></p>
+                    <p class="card-title">{{notVerifiedPatients.length}}<p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-body bgcolour">
+              <div class="row">
+                <div class="col-2 col-md-12">
+                  <div class="numbers">
+                    <p class="card-category"><b>Total Registered Patients</b></p>
+                    <p class="card-title">{{patients.length}}<p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-body bgcolour">
+              <div class="row">
+                <div class="col-2 col-md-12">
+                  <div class="numbers">
+                    <p class="card-category"><b>Total Registered Doctors</b></p>
+                    <p class="card-title">{{allDoctors.length}}<p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-body bgcolour">
+              <div class="row">
+                <div class="col-2 col-md-12">
+                  <div class="numbers">
+                    <p class="card-category"><b>Pending Appointments</b></p>
+                    <p class="card-title">{{pendingAppointments.length}}<p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1">
+          <button type="button" class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="bottom" (confirm)="logout()" (cancel)="cancelClicked =true">Logout</button>
+        </div>
+      </div>
+      <main *ngIf="isFalseregister" class="my-form">
+        <div class="cotainer">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header">Register Doctor </div>
+                <div class="card-body">
+                  <form  #doctorRegistration = "ngForm" (ngSubmit)="addDoctor()">
+                    <div class="form-group row">
+                      <label for="fisrt" class="col-md-4 col-form-label text-md-right">FirstName</label>
+                      <div class="col-md-6">
+                        <input type="text" id="fisrt" name="first" required #first ="ngModel" [(ngModel)]="registerDoctor.firstname" class="form-control" >
+                        <div *ngIf="first.invalid && (first.dirty || first.touched)"
+                             class="alert alert-danger">
+                          <div *ngIf="first.errors.required">
+                            Firstname is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="username" class="col-md-4 col-form-label text-md-right">Username</label>
+                      <div class="col-md-6">
+                        <input type="text" id="username" name="username" required #username ="ngModel" [(ngModel)]="registerDoctor.username" class="form-control" >
+                        <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                             class="alert alert-danger">
+                          <div *ngIf="username.errors.required">
+                            username is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                      <div class="col-md-6">
+                        <input type="text" id="email" name="email" class="form-control" required #email = "ngModel" [(ngModel)]="registerDoctor.email" >
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                             class="alert alert-danger">
+                          <div *ngIf="email.errors.required">
+                            Email is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-md-4 col-form-label text-md-right">Contact Number</label>
+                      <div class="col-md-6">
+                        <input type="text" id="contact" maxlength="10" name="contact" class="form-control" required #contact = "ngModel" [(ngModel)]="registerDoctor.contactnumber" >
+                        <div *ngIf="contact.invalid && (contact.dirty || contact.touched)"
+                             class="alert alert-danger">
+                          <div *ngIf="contact.errors.required">
+                            contact number is required.
+                          </div>
+                          <div *ngIf="contact.errors.maxlength">
+                            Maximum 10 digits only.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                      <div class="col-md-6">
+                        <input type="password" id="password" name="password" class="form-control" required minlength="6" [(ngModel)]="registerDoctor.password" #password = "ngModel">
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                             class="alert alert-danger">
+                          <div *ngIf="password.errors.required">
+                            password is required.
+                          </div>
+                          <div *ngIf="password.errors.minlength">
+                            password must be more than 6 digits
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="confirmpass" class="col-md-4 col-form-label text-md-right">Password(confirm)</label>
+                      <div class="col-md-6">
+                        <input type="password" name="confirmpass" id="confirmpass" class="form-control" required minlength="6" [(ngModel)]="confirmpassword" #confirmpass = "ngModel">
+                        <div *ngIf="confirmpass.invalid && (confirmpass.dirty || confirmpass.touched)"
+                             class="alert alert-danger">
+                          <div *ngIf="confirmpassword.errors.required">
+                            password is required.
+                          </div>
+                          <div *ngIf="confirmpass.errors.minlength">
+                            password must be more than 6 digits
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 offset-md-4">
+                      <button type="submit" [disabled]="!doctorRegistration.form.valid" (submit)="this.doctorRegistration.form.reset()" class="btn btn-primary">
+                        Register
+                      </button>
+                    </div>
+                    <p style="text-align: center">{{registerDoctorMessage}}</p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <div *ngIf="isFalseVerifyPatient" class="card-body">
+          <table class="table table-striped" >
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">UserName</th>
+              <th scope="col">First Name</th>
+              <th scope="col">City</th>
+              <th scope="col">Contact Number</th>
+              <th scope="col">verify</th>
+              <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let notVerifypatient of notVerifiedPatients">
+              <td>{{notVerifypatient.id}}</td>
+              <td>{{notVerifypatient.username}}</td>
+              <td>{{notVerifypatient.firstName}}</td>
+              <td>{{notVerifypatient.city}}</td>
+              <td>{{notVerifypatient.contactNumber}}</td>
+              <td><button class="btn btn-success" mwlConfirmationPopover [popoverTitle]="popoverTitleverify" [popoverMessage]="popoverMessageverify" placement="left" (confirm)="verifyPatient(notVerifypatient.id)" (cancel)="cancelClicked =true" >Verify</button></td>
+              <td><button class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle" popoverMessage="Are you sure you want to delete?" placement="left" (confirm)="removePatient(notVerifypatient.id)" (cancel)="cancelClicked =true" >Delete</button></td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="row" *ngIf="isFalseViewPanel1">
+        <div class="col-md-12">
+          <div class="card ">
+            <div class="card-header ">
+              <h5 class="btn btn-info" (click)="getAllDoctors()" style="display: inline-block"> Show Doctors List</h5>
+              <h5 class="btn btn-info" (click)="isFalse = false" style="display: inline-block">Hide Doctors List</h5>
+            </div>
+            <div class="card-body " style="width: 100% ; height: 200px; overflow: auto">
+                <div *ngIf="isFalse" class="container-fluid">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">UserName</th>
+                      <th scope="col">Contact Number</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Qualification</th>
+                      <th scope="col">Specialization</th>
+                      <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let doctor of allDoctors">
+                      <td>{{doctor.id}}</td>
+                      <td>{{doctor.username}}</td>
+                      <td>{{doctor.contactnumber}}</td>
+                      <td>{{doctor.email}}</td>
+                      <td>{{doctor.firstname}}</td>
+                      <td>{{doctor.lastname}}</td>
+                      <td>{{doctor.qualifications}}</td>
+                      <td>{{doctor.specialization}}</td>
+                      <td><button class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle" popoverMessage="Are you sure you want to delete?" placement="left" (confirm)="deleteDoctor(doctor.id)" (cancel)="cancelClicked =true" >Delete</button></td>
+                    </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isFalseViewPanel2">
+        <div class="col-md-12">
+          <div class="card card-chart">
+            <div class="card-header">
+              <h5 class="btn btn-info" (click)="getAllVerifiedPatients()" style="display: inline-block">Show Patients List</h5>
+              <h5 class="btn btn-info" (click)="isFalseViewPatient = false" style="display: inline-block">Hide Patients List</h5>
+            </div>
+            <div class="card-body">
+              <div id="speedChart" style="width: 100%; height: 200px; overflow: auto" >
+                <table class="table table-striped" *ngIf="isFalseViewPatient">
+                  <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let patient of patients" >
+                    <td>{{patient.id}}</td>
+                    <td>{{patient.username}}</td>
+                    <td>{{patient.email}}</td>
+                    <td>{{patient.firstName}}</td>
+                    <td>{{patient.lastName}}</td>
+                    <td>{{patient.dob}}</td>
+                    <td>{{patient.city}}</td>
+                    <td>{{patient.state}}</td>
+                    <td>{{patient.country}}</td>
+                    <td>{{patient.contactNumber}}</td>
+                    <td><button class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left" (confirm)="removePatient(patient.id)" (cancel)="cancelClicked =true" >Delete</button></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isFalseViewAllAppointment">
+        <table class="table table-striped" >
+          <thead>
+          <tr>
+            <th scope="col">Appointment Id</th>
+            <th scope="col">Health Description</th>
+            <th scope="col">Doctor's Prescription</th>
+            <th scope="col">Patient Name</th>
+            <th scope="col">Doctor Name</th>
+            <th scope="col">Patient contact Number</th>
+            <th scope="col">Doctor Contact Number</th>
+            <th scope="col">Appointment Date</th>
+            <th scope="col">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let appointment of allAppointments">
+            <td>{{appointment.id}}</td>
+            <td>{{appointment.description}}</td>
+            <td>{{appointment.prescription}}</td>
+            <td>{{appointment.patient.firstName}}</td>
+            <td>{{appointment.doctor.firstname}}</td>
+            <td>{{appointment.patient.contactNumber}}</td>
+            <td>{{appointment.doctor.contactnumber}}</td>
+            <td>{{appointment.date}}</td>
+            <td><button *ngIf="appointment.prescription == null" class="btn btn-danger"  mwlConfirmationPopover [popoverTitle]="popoverTitle" popoverMessage="Are you sure you want to delete?" placement="left" (confirm)="deleteAppointment(appointment.id)" (cancel)="cancelClicked =true" >Delete</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="make appointment" *ngIf="isFalseCreateAppointment">
+        <div class="row">
+          <div class="col-md-8">
+            <form #appointmentForm = "ngForm" (ngSubmit)="makeAppointment()" >
+              <div class="form-group">
+                <label for="description">Health Issue Description of Patient:</label>
+                <textarea class="form-control rounded-0" id="description" required #healthDescription = "ngModel" name="description" [(ngModel)]="description" rows="10"></textarea>
+                <div *ngIf="healthDescription.invalid && (healthDescription.dirty || healthDescription.touched)"
+                     class="alert alert-danger">
+                  <div *ngIf="healthDescription.errors.required">
+                    Description is required.
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label for="element">Select Doctor:</label>
+                <select name="doctor" id="element" [(ngModel)]="idDoctor" required #doctor = "ngModel" class="form-control" >
+                  <div *ngIf="doctor.invalid && (doctor.dirty || doctor.touched)"
+                       class="alert alert-danger">
+                    <div *ngIf="doctor.errors.required">
+                      Select Doctor.
+                    </div>
+                  </div>
+                  <option *ngFor="let doctor of allDoctors" [value]="doctor.id " >
+                    {{doctor.firstname}} {{doctor.lastname}} , username-{{doctor.username}}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label for="patient">Select Patient:</label>
+                <select name="doctor" id="patient" [(ngModel)]="idPatient" required #patient = "ngModel" class="form-control" >
+                  <div *ngIf="patient.invalid && (patient.dirty || patient.touched)"
+                       class="alert alert-danger">
+                    <div *ngIf="patient.errors.required">
+                      Select Patient.
+                    </div>
+                  </div>
+                  <option *ngFor="let patient of patients" [value]="patient.id " >
+                    {{patient.firstName}} {{patient.lastName}}
+                  </option>
+                </select>
+              </div>
+              <label for="date">Appointment Date:</label>
+              <input class="form-control" type="date" name="date" id="date" [(ngModel)]="appointmentDate" min-date="" placeholder="yyyy-MM-dd" required/>
+              <button class="btn btn-success" type="submit" [disabled]="!appointmentForm.form.valid" > submit</button>
+            </form>
+            <p style="text-align: center">{{makeAppointmentMessage}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isFalseViewComplaint">
+      <table class="table table-striped" >
+        <thead>
+        <tr>
+          <th scope="col">Appointment Id</th>
+          <th scope="col">Health Description</th>
+          <th scope="col">Doctor's Prescription</th>
+          <th scope="col">Patient Name</th>
+          <th scope="col">Doctor Name</th>
+          <th scope="col">Patient contact Number</th>
+          <th scope="col">Doctor Contact Number</th>
+          <th scope="col">Complaint/Feedback </th>
+          <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let appointment of allAppointments">
+          <td *ngIf="appointment.complaint != null">{{appointment.id}}</td>
+          <td *ngIf="appointment.complaint != null">{{appointment.description}}</td>
+          <td *ngIf="appointment.complaint != null">{{appointment.prescription}}</td>
+          <td *ngIf="appointment.complaint != null">{{appointment.patient.firstName}} {{appointment.patient.lastName}}</td>
+          <td *ngIf="appointment.complaint != null">{{appointment.doctor.firstname}} {{appointment.doctor.lastname}}</td>
+          <td *ngIf="appointment.complaint != null">{{appointment.patient.contactNumber}}</td>
+          <td *ngIf="appointment.complaint != null">{{appointment.doctor.contactnumber}}</td>
+          <td *ngIf="appointment.complaint != null">{{appointment.complaint}}</td>
+          <td *ngIf="appointment.complaint != null"><p *ngIf="appointment.complaintForward == true"><b>Forwarded</b></p><button *ngIf="appointment.complaintForward == false" class="btn btn-danger"  mwlConfirmationPopover popoverTitle="Send to Doctor?" popoverMessage="Are you sure you want to send this to Doctor?" placement="left" (confirm)="complaintForward(appointment.id)" (cancel)="cancelClicked =true" >Forward</button></td>
+        </tr>
+        </tbody>
+        <p style="text-align: center">{{sucessmessage}}</p>
+      </table>
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

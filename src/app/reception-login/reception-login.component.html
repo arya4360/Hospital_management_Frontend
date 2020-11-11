@@ -1,0 +1,46 @@
+
+<html>
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body class="bg" style="background-image: url(assets/images/patientdashboard.jpg)">
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h4>Welcome to Reception Portal</h4>
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="../assets/images/user.png" id="icon " alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form #receptionForm = "ngForm" (ngSubmit)="receptionLogin()"  novalidate>
+      <div>
+        <input type="text" id="username"  required class="fadeIn second form-control" name="username" #username ="ngModel" [(ngModel)]="receptionusername" placeholder="username">
+        <div *ngIf="username.errors && (username.dirty || username.touched)" class="alert alert-danger">
+          <div [hidden]="!username.errors.required" >
+            Name is required.
+          </div>
+        </div>
+      </div>
+      <input type="password" id="password" required class="fadeIn third form-control" name="password" #password ="ngModel" [(ngModel)]="receptionpassword" placeholder="password">
+      <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
+        <div [hidden]="!password.errors.required" >
+          Password is required.
+        </div>
+      </div>
+      <button type="submit" [disabled]="!receptionForm.form.valid" class="btn btn-primary" >Login</button>
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

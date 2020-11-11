@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class PatientLoginComponent implements OnInit {
 
-  public patientLoginData = new PatientLoginData('', '');
+  public patientLoginDetails = new PatientLoginData('', '');
   message: any;
 
   constructor(private service: PatientRegistrationService, private router: Router) {
@@ -20,11 +20,10 @@ export class PatientLoginComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  public loginPatient(value: any) {
-    const res = this.service.login(this.patientLoginData);
-    this.router.navigate(['/patient-dashboard']);
+  public login(value: any) {
+    const res = this.service.loginWithSecurity(this.patientLoginDetails);
     res.subscribe(data => this.message = data,
-      error => console.log('Exception occoured'));
+      error => console.log(error));
     console.log(value);
   }
 }

@@ -1,25 +1,24 @@
 
-
 <html>
 <head>
 
 </head>
 <body>
-<form #patientLoginForm = "ngForm" (ngSubmit)="loginPatient(patientLoginForm.value)">
+<h1 style="text-align: center">This component is only for testing purpose of security. this component is not used in the main application</h1>
+<form #patientLoginForm = "ngForm" (ngSubmit)="login(patientLoginForm.value)">
   <div class="container register-form">
     <div class="form">
       <div class="note">
         <p>Patient Login Form </p>
       </div>
-
       <div class="form-content">
         <div class="row">
           <div class="col-md-8">
             <div class="form-group">
-              <input type="text" name="Username"   [(ngModel)]="patientLoginData.username" class="form-control" placeholder="username *"/>
+              <input type="text" name="Username"   [(ngModel)]="patientLoginDetails.username" class="form-control" placeholder="username *"/>
             </div>
             <div class="form-group">
-              <input type="password" name="password" [(ngModel)]="patientLoginData.password" class="form-control" placeholder="Your Password *" />
+              <input type="password" name="password" [(ngModel)]="patientLoginDetails.password" class="form-control" placeholder="Your Password *" />
             </div>
           </div>
         </div>

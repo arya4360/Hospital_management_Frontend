@@ -1,1 +1,224 @@
-<p>patient-dashboard works!</p>
+<html>
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body class="bg" style="background-color: #5fbae9">
+<div class="row">
+<div class="col-md-3">
+<div class="card" style="width: 20rem;">
+  <img src="../assets/images/patient.jpg" class="card-img-top" >
+</div>
+</div>
+<div class="col-md-8">
+  <div class="profile-head ">
+    <h5>
+      Patient Id: {{id}}
+    </h5>
+    <h6>
+      welcome Patient
+    </h6>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" >About</a>
+      </li>
+    </ul>
+  </div>
+
+</div>
+  <div class="col-md-1">
+    <button type="button" class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="bottom" (confirm)="logout()" (cancel)="cancelClicked =true">Logout</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="card-body sidemenu ">
+      <h5 class=" list-group-item"><b>Welcome Patient:</b></h5>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><button type="button" class="btn-dark btn" (click)="viewProfile()">View Profile</button></li>
+      <li class="list-group-item"><button type="button" class="btn btn-dark" (click)="editProfileClicked()">Edit Profile</button></li>
+      <li class="list-group-item"><button type="button" class="btn-dark btn" (click)="viewCreateAppointment()">Create Appointment</button></li>
+      <li class="list-group-item"><button type="button" class="btn btn-dark" (click)="viewAppointment()">View Previous Appointment</button></li>
+    </ul>
+  </div>
+  </div>
+  <div class="col-md-7">
+    <div >
+        <div class="container" *ngIf="this.isfalse">
+          <div class="view-account">
+            <section class="module">
+              <div class="content-panel">
+                <form class="form-horizontal" #updateDetails = "ngForm" (ngSubmit)="updateDetailsPatient()" >
+                  <fieldset class="fieldset">
+                    <h3 class="fieldset-title">Personal Info</h3>
+                    <p>Username: {{updatedDetails.username}}</p>
+                    <div class="form-group">
+                      <label class="col-md-2 col-sm-3 col-xs-12 control-label" >First Name</label>
+                      <div class="col-md-10 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control"  name="firstName" [(ngModel)]="updatedDetails.firstName">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 col-sm-3 col-xs-12 control-label">Last Name</label>
+                      <div class="col-md-10 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control"  name="Last name" [(ngModel)]="updatedDetails.lastName">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 col-sm-3 col-xs-12 control-label">Password</label>
+                      <div class="col-md-10 col-sm-9 col-xs-12">
+                        <input type="password" class="form-control" name="password" [(ngModel)]="updatedDetails.password">
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset class="fieldset">
+                    <h3 class="fieldset-title">Contact Info</h3>
+                    <div class="form-group">
+                      <label class="col-md-2  col-sm-3 col-xs-12 control-label">Mobile Number</label>
+                      <div class="col-md-10 col-sm-9 col-xs-12">
+                        <input type="email" class="form-control"  name="contact number" [(ngModel)]="updatedDetails.contactNumber">
+                        <p class="help-block">PLease enter 10 digits contact number</p>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <hr>
+                  <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                    <button class="btn btn-primary" type="submit" name="update profile"  >Update Profile</button>
+                  </div>
+                </form>
+              </div>
+            </section>
+            <h3 style="text-align: center ; color: #0072ff">{{message}}</h3>
+          </div>
+        </div>
+    </div>
+    <div class="tab-content profile-tab" id="myTabContent" *ngIf="isFalseViewProfile">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="row">
+          <div class="col-md-6">
+            <label>User Id</label>
+          </div>
+          <div class="col-md-6">
+            <p>{{id}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Name</label>
+          </div>
+          <div class="col-md-6">
+            <p>{{this.viewDetails.firstName}} {{this.viewDetails.lastName}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Username</label>
+          </div>
+          <div class="col-md-6">
+            <p>{{viewDetails.username}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Email</label>
+          </div>
+          <div class="col-md-6">
+            <p>{{viewDetails.email}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Phone</label>
+          </div>
+          <div class="col-md-6">
+            <p>{{viewDetails.contactNumber}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content profile-tab" *ngIf="isFalseAppointment" >
+      <table class="table table-striped"  >
+        <thead>
+        <tr>
+          <th scope="col">Appointment Id</th>
+          <th scope="col">Description</th>
+          <th scope="col" >Prescription</th>
+          <th scope="col">Patient Name</th>
+          <th scope="col">Doctor Name</th>
+          <th scope="col">Doctor contact Number</th>
+          <th scope="col">Appointment Date:</th>
+          <th scope="col">Complaint/Feedback</th>
+          <th scope="col">Button</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let appointments of appointmentDetails">
+          <td>{{appointments.id}}</td>
+          <td>{{appointments.description}}</td>
+          <td>{{appointments.prescription}}</td>
+          <td>{{appointments.patient.firstName}}</td>
+          <td>{{appointments.doctor.username}}</td>
+          <td>{{appointments.doctor.contactnumber}}</td>
+          <td>{{appointments.date}}</td>
+          <td>{{appointments.complaint}}</td>
+          <td><button class="btn btn-danger" *ngIf="appointments.prescription == null" mwlConfirmationPopover [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left" (confirm)="deleteAppointment(appointments.id)" (cancel)="cancelClicked =true" >Delete</button><button class="btn btn-info" *ngIf="appointments.prescription != null && appointments.complaint == null" mwlConfirmationPopover popoverTitle="Write complaint/feedback" popoverMessage="Are You sure?" (cancel)="cancelClicked = true" (confirm)="viewWriteComplaint(appointments.id)" placement="left">Complaint</button></td>
+        </tr>
+        <div style="text-align: center ; color: red"><p>{{deleteAppointmentMessage}}</p></div>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="isFalseCreateAppointment" >
+      <form #formElement = "ngForm" (ngSubmit)="doAppointment(formElement.value)" >
+      <div class="form-group">
+        <label for="des">Health Issue Description</label>
+        <textarea class="form-control rounded-0" id="des" required #des = "ngModel" name="description" [(ngModel)]="description" rows="10"></textarea>
+        <div *ngIf="des.invalid && (des.dirty || des.touched)"
+             class="alert alert-danger">
+          <div *ngIf="des.errors.required">
+            Description is required.
+          </div>
+        </div>
+      </div>
+        <label for="element">Select Doctor:</label>
+        <select name="doctor" id="element" [(ngModel)]="doctorId" required #element = "ngModel" class="form-control" >
+          <div *ngIf="element.invalid && (element.dirty || element.touched)"
+               class="alert alert-danger">
+            <div *ngIf="element.errors.required">
+              Doctor is required.
+            </div>
+          </div>
+          <option *ngFor="let doctor of allDoctors" [value]="doctor.id " >
+            {{doctor.firstname}}
+          </option>
+        </select>
+        <label for="date">Appointment Date:</label>
+        <input class="form-control" type="date" name="date" id="date" [(ngModel)]="appointmentDate" min-date placeholder="yyyy-MM-dd" required/>
+      <button class="btn btn-success" type="submit" [disabled]="!formElement.form.valid" > submit</button>
+      </form>
+      <div style="text-align: center"><p>{{appointmentMessage}}</p></div>
+    </div>
+    <div *ngIf="isFalseWriteComplaint">
+      <form #complaintForm = "ngForm" (ngSubmit)="writeComplaint()" >
+        <div class="form-group">
+          <label>Doctor Name: {{getAppointmentById.doctor.firstname}} {{getAppointmentById.doctor.lastname}}</label>
+        </div>
+        <div class="form-group">
+          <label for="des">Complaint/Feedback</label>
+          <textarea class="form-control rounded-0" id="complaint" required #complaint = "ngModel" name="complaint" [(ngModel)]="getAppointmentById.complaint" rows="10"></textarea>
+          <div *ngIf="complaint.invalid && (complaint.dirty || complaint.touched)"
+               class="alert alert-danger">
+            <div *ngIf="complaint.errors.required">
+              complaint/feedback is required is required.
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-success" type="submit" [disabled]="!complaintForm.form.valid" > submit</button>
+        <div style="text-align: center ; color: red"><p>{{complaintMessage}}</p></div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

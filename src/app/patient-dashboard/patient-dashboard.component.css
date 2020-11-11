@@ -1,0 +1,36 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  /* Full height */
+  width: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.card-img-top{
+  justify-content: center;
+  margin-left: 10%;
+}
+.profile-work span{
+  text-decoration: none;
+  color: #495057;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.profile-tab label{
+  font-weight: 600;
+  font-size: 20px;
+}
+.profile-tab p{
+  font-weight: 600;
+  color: #0062cc;
+  font-size: 20px;
+}
+.col-md-3{
+  border-right: #6c757d 5px solid;
+}
